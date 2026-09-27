@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Offline AI Notepad</title>
+<meta name="description" content="A private notepad with AI built in. Write, format, organise and let on-device AI summarise, polish and translate your notes — no account, no internet.">
+<style>
+  :root { --bg:#063b2c; --surface:#0b4a37; --line:#226b53; --ink:#eef1f3; --ink-2:#bac8c3; --ink-3:#93b3a6;
+          --gold:linear-gradient(135deg,#fff0b8 0%,#d4af37 30%,#f5dc86 55%,#b08a26 80%,#e3c35a 100%);
+          --backdrop:linear-gradient(135deg,#0c5a42 0%,#04291e 24%,#0e6248 46%,#042418 72%,#0a4d39 100%);
+          --card:linear-gradient(135deg,#1a7c5c 0%,#0b4a37 30%,#15694f 55%,#083d2d 82%,#11593f 100%); }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); background-image:var(--backdrop); background-attachment:fixed; color:var(--ink);
+         font:16px/1.7 -apple-system,BlinkMacSystemFont,"SF Pro Text",Segoe UI,Roboto,sans-serif;
+         -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:760px; margin:0 auto; padding:64px 20px 96px; }
+  .mark { width:64px; height:64px; display:block; margin:0 0 22px; border-radius:50%; }
+  h1 { font-size:clamp(30px,6vw,46px); margin:0 0 8px; letter-spacing:-0.02em; font-weight:700; line-height:1.15;
+       background:var(--gold); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .lede { font-size:19px; color:var(--ink-2); margin:0 0 36px; }
+  .updated { color:var(--ink-3); font-size:14px; margin:0 0 36px; }
+  h2 { font-size:20px; margin:44px 0 12px; font-weight:600; color:#e6c65c; }
+  p, li { color:var(--ink-2); }
+  strong { color:var(--ink); font-weight:600; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:22px 24px; margin:24px 0; }
+  .panel p:first-child, .panel h3:first-child { margin-top:0; } .panel p:last-child { margin-bottom:0; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin:24px 0; }
+  .grid .panel { margin:0; }
+  h3 { margin:0 0 6px; font-size:17px; color:#e6c65c; }
+  ul { padding-left:20px; }
+  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:15px; }
+  th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); color:var(--ink-2); vertical-align:top; }
+  th { color:var(--ink); font-weight:600; }
+  a { color:#e6c65c; }
+  pre { white-space:pre-wrap; font-size:12px; color:var(--ink-3); background:rgba(0,0,0,.18); padding:16px; border-radius:12px; overflow-x:auto; }
+  footer { border-top:1px solid var(--line); margin-top:56px; padding-top:24px; color:var(--ink-3); font-size:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<svg class="mark" viewBox="0 0 100 100" aria-hidden="true">
+  <defs>
+    <clipPath id="disc"><circle cx="50" cy="50" r="50"/></clipPath>
+    <linearGradient id="grey" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4a4d52"/><stop offset=".4" stop-color="#2a2c30"/>
+      <stop offset=".65" stop-color="#3a3d42"/><stop offset="1" stop-color="#1c1d20"/></linearGradient>
+    <linearGradient id="emerald" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3fe0a4"/><stop offset=".3" stop-color="#0b8a60"/>
+      <stop offset=".52" stop-color="#5cf0b8"/><stop offset=".78" stop-color="#075c40"/><stop offset="1" stop-color="#0e9c6c"/></linearGradient>
+    <linearGradient id="goldleaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff0b8"/><stop offset=".35" stop-color="#d4af37"/>
+      <stop offset=".6" stop-color="#f6de8a"/><stop offset="1" stop-color="#a9821f"/></linearGradient>
+  </defs>
+  <g clip-path="url(#disc)">
+    <rect x="0" y="0" width="50" height="100" fill="url(#grey)"/>
+    <rect x="50" y="0" width="50" height="100" fill="url(#emerald)"/>
+  </g>
+  <rect x="29.75" y="24.75" width="40.5" height="50.5" rx="6" fill="none" stroke="url(#goldleaf)" stroke-width="5.5"/>
+  <g stroke="url(#goldleaf)" stroke-width="4.5" stroke-linecap="round">
+    <line x1="37.5" y1="41.5" x2="62.5" y2="41.5"/><line x1="37.5" y1="50.5" x2="62.5" y2="50.5"/><line x1="37.5" y1="59.5" x2="54.5" y2="59.5"/>
+  </g>
+  <path d="M71.5 13.5 Q74.3 20.7 81.5 23.5 Q74.3 26.3 71.5 33.5 Q68.7 26.3 61.5 23.5 Q68.7 20.7 71.5 13.5 Z" fill="url(#goldleaf)"/>
+</svg>
+
+<h1>Offline AI Notepad</h1>
+<p class="lede">A beautiful notepad with AI built in — and nothing you write ever leaves your iPhone or iPad. No account. No subscription. No internet needed.</p>
+
+<div class="grid">
+  <div class="panel"><h3>Formats as you type</h3><p>Real checkboxes you tick with a tap, bullets and numbered lists that continue themselves, nested lists, headings, quotes, <strong>bold</strong>, <em>italic</em> and more. Type <code>[] </code> and a checklist appears.</p></div>
+  <div class="panel"><h3>AI that works offline</h3><p>Summarize, Key points, Polish, Shorter, Longer, Formal, Friendly, Simplify, Bullets, Continue, suggest a Title, and Translate into seven languages — all on the device.</p></div>
+  <div class="panel"><h3>Ask your notes</h3><p>Ask a question across everything you've written. The app finds the right notes, the AI answers from them, and the exact sentence from your note is shown underneath so you can check it.</p></div>
+  <div class="panel"><h3>Write with AI</h3><p>Describe what you need — a packing list, a meeting agenda, study notes, an email — and a draft appears. It's only saved if you keep it.</p></div>
+  <div class="panel"><h3>Folders, tags and photos</h3><p>File notes in folders, tag them with <code>#words</code> to filter in a tap, and add photos from your library. Search highlights what it found inside the note.</p></div>
+  <div class="panel"><h3>Five versions, like git</h3><p>Every note keeps its last five versions. See exactly what changed, word by word, and go back with one tap — including after any AI edit. Undo and redo cover every step.</p></div>
+</div>
+
+<h2>Honest about AI</h2>
+<p>A compact language model runs on your device's own chip. It's fast and private, and like any AI it can be wrong — so nothing changes until you choose, rewrites show their changes first, figures the AI added are flagged, and every change can be undone.</p>
+
+<h2>Private by design</h2>
+<p>No account, no sync, no analytics, no tracking and no network connections at all. Your notes, photos and history are stored only on your device.</p>
+
+<h2>Two finishes</h2>
+<p><strong>Emerald</strong> — brushed metallic emerald with gold highlights and silver-white text. <strong>Dark</strong> — brushed graphite with silver highlights and light grey text.</p>
+
+<h2>For iPhone and iPad</h2>
+<p>On iPad your notes and the open note sit side by side. Works in flight mode, on the underground, anywhere.</p>
+
+<footer>Offline AI Notepad · Contact: <a href="mailto:sivavimelrajhen@gmail.com">sivavimelrajhen@gmail.com</a></footer>
+</div>
+</body>
+</html>
